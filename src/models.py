@@ -44,8 +44,8 @@ class Starships(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
     model = Column(String(250), nullable=True)
-    manufacturer = (String(250), nullable=True)
-    cargo_capacity = (String(250), nullable=False)
+    manufacturer = Column(String(250), nullable=True)
+    cargo_capacity = Column(String(250), nullable=False)
 
     def serialize(self):
         return {
