@@ -54,7 +54,41 @@ class Starships(Base):
             "manufacturer": self.manufacturer,
             "cargo_capacity": self.cargo_capacity
             }
+    
+class People(Base):
+    __tablename__ = 'people'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250), nullable=False)
+    eye_color = Column(String(250), nullable=True)
+    skin_color = Column(String(250), nullable=True)
+    birth_year = Column(String(250), nullable=True)
 
+    def serialize(self):
+        return {
+            "eye_color": self.eye_color,
+            "skin_color": self.skin_color,
+            "birth_year": self.birth_year
+            }
 
+class Fav(Base):
+    __tablename__ = 'fav'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+    people_id = Column(Integer, ForeignKey('people.id'), nullable=True)
+    planets_id = Column(Integer, ForeignKey('planets.id'), nullable=True)
+    starships_id = Column(Integer, ForeignKey('starships.id'), nullable=True)
 
-render_er(Base, 'diagram.png')
+    user = relationship(User)
+    people = relationship(People)
+    planets = relationship(Planets)
+    starships = relationship(Starships)
+
+    def serialize(self):
+        return {
+            "user_id": self.user_id,
+            "people_id": self.people_id,
+            "planets_id": self.planets_id,
+            "starships_id": self.starships_id
+            }
+
+render_er (Base, 'diagram.png')
